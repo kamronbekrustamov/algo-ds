@@ -1,0 +1,18 @@
+# Virtual environment
+venv/
+.venv/
+
+# Byte-compiled / optimized / c-extension files
+__pycache__/
+*.pyc
+*.pyd
+*.pyo
+
+# IDE-specific files (e.g., from VS Code, PyCharm)
+.vscode/
+.idea/
+
+# Other temporary files
+*.log
+dist/
+build/
