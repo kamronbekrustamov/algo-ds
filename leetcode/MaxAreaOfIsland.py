@@ -1,8 +1,7 @@
 from typing import List
 
 class Solution:
-    @staticmethod
-    def maxAreaOfIsland(grid: List[List[int]]) -> int:
+    def maxAreaOfIsland(self, grid: List[List[int]]) -> int:
         if not grid or not grid[0]:
             return 0
 
