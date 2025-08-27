@@ -3,23 +3,21 @@ from typing import List
 
 class Solution:
     def shortestToChar(self, s: str, c: str) -> List[int]:
-        ans = []
+        n = len(s)
+        ans = [n] * n
 
-        indices = []
-        start_index = 0
-        while True:
-            index = s[start_index:].find(c)
-            if index == -1:
-                break
-            indices.append(start_index + index)
-            start_index = start_index + index + 1
+        # Left to right pass: distance to nearest c on the left
+        pos = -n
+        for i in range(n):
+            if s[i] == c:
+                pos = i
+            ans[i] = i - pos
 
-        first = indices.pop(0)
-        second = first
-
-        for i in range(0, len(s)):
-            ans.append(min(abs(first - i), abs(second - i)))
-            if i >= second and indices:
-                first, second = second, indices.pop(0)
+        # Right to left pass: update with distance to nearest c on the right
+        pos = 2 * n
+        for i in range(n - 1, -1, -1):
+            if s[i] == c:
+                pos = i
+            ans[i] = min(ans[i], pos - i)
 
         return ans
