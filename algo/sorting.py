@@ -139,39 +139,30 @@ def quick_sort(arr: List[int]) -> List[int]:
 
 
 def heap_sort(arr: List[int]) -> List[int]:
-    """
-    Implements the Heap Sort algorithm.
+    result = arr[:]
+    size = len(result)
+    def heapify(heap: List[int], index_node: int, right_bound: int):
+        while index_node * 2 + 1 <= right_bound:
 
-    It first converts the array into a max heap. Then, it repeatedly extracts
-    the maximum element from the heap (which is the root) and moves it to the
-    end of the array. This implementation returns a new sorted list.
+            left_child, right_child = index_node * 2 + 1, index_node * 2 + 2
 
-    Time Complexity: O(n log n) in all cases.
-    Space Complexity: O(n) to store the copy of the array. The sort itself is O(1) in-place on the copy.
-    """
-    arr_copy = arr[:]  # Create a copy to avoid modifying the original list
-    n = len(arr_copy)
+            if right_child <= right_bound and heap[left_child] < heap[right_child]:
+                if heap[index_node] < heap[right_child]:
+                    heap[index_node], heap[right_child] = heap[right_child], heap[index_node]
+                    index_node = right_child
+                else:
+                    break
+            elif heap[index_node] < heap[left_child]:
+                heap[index_node], heap[left_child] = heap[left_child], heap[index_node]
+                index_node = left_child
+            else:
+                break
+    
+    for i in range(size - 1, -1, -1):
+        heapify(result, i, size - 1)
+    
+    for i in range(size - 1, 0, -1):
+        result[0], result[i] = result[i], result[0]
+        heapify(result, 0, i - 1)
 
-    def _heapify(arr, n, i):
-        largest = i  # Initialize largest as root
-        left = 2 * i + 1
-        right = 2 * i + 2
-
-        if left < n and arr[i] < arr[left]:
-            largest = left
-        if right < n and arr[largest] < arr[right]:
-            largest = right
-        if largest != i:
-            arr[i], arr[largest] = arr[largest], arr[i]  # swap
-            _heapify(arr, n, largest)
-
-    # Build a maxheap.
-    for i in range(n // 2 - 1, -1, -1):
-        _heapify(arr_copy, n, i)
-
-    # One by one extract elements
-    for i in range(n - 1, 0, -1):
-        arr_copy[i], arr_copy[0] = arr_copy[0], arr_copy[i]  # swap
-        _heapify(arr_copy, i, 0)
-
-    return arr_copy
+    return result
