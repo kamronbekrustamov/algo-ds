@@ -1,4 +1,4 @@
-# AlgoDSPython
+# Algorithms and Data Structures in Python
 
 This repository contains implementations of various algorithms and data structures in Python, primarily focusing on LeetCode problems.
 
