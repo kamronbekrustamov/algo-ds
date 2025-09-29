@@ -141,24 +141,25 @@ def quick_sort(arr: List[int]) -> List[int]:
 def heap_sort(arr: List[int]) -> List[int]:
     result = arr[:]
     size = len(result)
-    def heapify(heap: List[int], index_node: int, right_bound: int):
-        while index_node * 2 + 1 <= right_bound:
-
-            left_child, right_child = index_node * 2 + 1, index_node * 2 + 2
-
-            if right_child <= right_bound and heap[left_child] < heap[right_child]:
-                if heap[index_node] < heap[right_child]:
-                    heap[index_node], heap[right_child] = heap[right_child], heap[index_node]
-                    index_node = right_child
-                else:
+    def heapify(heap: List[int], parent: int, right_bound: int):
+            while True:
+                largest = parent
+                left = parent * 2 + 1
+                right = parent * 2 + 2
+                
+                if right <= right_bound and heap[largest] < heap[right]:
+                    largest = right
+                
+                if left <= right_bound and heap[largest] < heap[left]:
+                    largest = left
+                
+                if parent == largest:
                     break
-            elif heap[index_node] < heap[left_child]:
-                heap[index_node], heap[left_child] = heap[left_child], heap[index_node]
-                index_node = left_child
-            else:
-                break
+
+                heap[parent], heap[largest] = heap[largest], heap[parent]
+                parent = largest
     
-    for i in range(size - 1, -1, -1):
+    for i in range(size // 2 - 1, -1, -1):
         heapify(result, i, size - 1)
     
     for i in range(size - 1, 0, -1):
