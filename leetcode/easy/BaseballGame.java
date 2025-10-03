@@ -13,11 +13,8 @@ class Solution {
      * Algorithm Breakdown:
      * 1. Initialize an ArrayList `scores` to store the record of valid points.
      * 2. Iterate through each operation in the input array.
-     * 3. Use a switch statement to handle the four types of operations:
-     *    - "C" (Cancel): Remove the last recorded score from `scores`.
-     *    - "D" (Double): Get the last score, double it, and add the new score to `scores`.
-     *    - "+": Get the last two scores, sum them, and add the new score to `scores`.
-     *    - Integer: Parse the string to an integer and add it to `scores`.
+     * 3. Use an enhanced switch statement (available in modern Java) to handle
+     *    the four types of operations.
      * 4. After processing all operations, iterate through the `scores` list and
      *    sum up all the values to get the total score.
      *
@@ -35,33 +32,29 @@ class Solution {
 
         // 2. Iterate through each operation.
         for (String op : operations) {
-            // 3. Handle the different operation types.
+            // 3. Handle the different operation types using an enhanced switch statement.
             switch (op) {
-                case "C":
+                case "C" -> {
                     // "C" (Cancel): Remove the last valid score.
                     if (!scores.isEmpty()) {
                         scores.remove(scores.size() - 1);
                     }
-                    break;
-                case "D":
+                }
+                case "D" -> {
                     // "D" (Double): Double the last valid score and record it.
                     if (!scores.isEmpty()) {
-                        int lastScore = scores.get(scores.size() - 1);
-                        scores.add(2 * lastScore);
+                        scores.add(2 * scores.get(scores.size() - 1));
                     }
-                    break;
-                case "+":
+                }
+                case "+" -> {
                     // "+": Sum the last two valid scores and record it.
                     if (scores.size() >= 2) {
-                        int lastScore = scores.get(scores.size() - 1);
-                        int secondLastScore = scores.get(scores.size() - 2);
-                        scores.add(lastScore + secondLastScore);
+                        scores.add(scores.get(scores.size() - 1) + scores.get(scores.size() - 2));
                     }
-                    break;
-                default:
+                }
+                default ->
                     // Integer: Parse the number and record it as a new score.
                     scores.add(Integer.parseInt(op));
-                    break;
             }
         }
 
