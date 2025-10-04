@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.LinkedList;
+import java.util.ArrayDeque;
 import java.util.Deque;
 
 /**
@@ -51,12 +51,13 @@ class Solution {
         // Result list to store the traversal order
         List<Integer> result = new ArrayList<>();
         
-        // Using Deque interface with LinkedList implementation as a stack
-        // Deque is preferred over the legacy Stack class because:
-        // 1. Stack class is synchronized (thread-safe) which adds unnecessary overhead
-        // 2. Deque provides a more complete and consistent set of LIFO operations
-        // 3. It's the recommended approach in modern Java
-        Deque<TreeNode> stack = new LinkedList<>();
+        // Using Deque interface with ArrayDeque implementation as a stack
+        // ArrayDeque is preferred over LinkedList for stack operations because:
+        // 1. Better performance for push/pop operations (O(1) amortized)
+        // 2. Lower memory overhead (no node objects with pointers)
+        // 3. Better cache locality due to contiguous memory allocation
+        // 4. No capacity constraints (resizes automatically)
+        Deque<TreeNode> stack = new ArrayDeque<>();
         
         // Initialize the stack with the root node to start traversal
         stack.push(root);
