@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
+import java.util.LinkedList;
+import java.util.Deque;
 
 /**
  * Definition for a binary tree node.
@@ -17,89 +18,115 @@ import java.util.Stack;
  *     }
  * }
  */
+
+/**
+ * Solution class for binary tree in-order traversal.
+ * 
+ * In-order traversal follows the pattern: Left -> Root -> Right
+ * 
+ * This implementation uses an iterative approach with a stack to simulate the
+ * recursive call stack, avoiding potential stack overflow issues with deep trees.
+ */
 class Solution {
     /**
      * Performs an in-order traversal of a binary tree using an iterative approach.
-     *
-     * This solution avoids recursion by using an explicit Stack to simulate the
-     * function call stack. This can be beneficial for very deep trees where
-     * recursion might lead to a StackOverflowError.
-     *
-     * The in-order traversal algorithm follows the pattern:
-     * 1. Traverse the left subtree.
-     * 2. Visit the root node.
-     * 3. Traverse the right subtree.
-     *
-     * Algorithm Breakdown (Iterative):
-     * 1. Initialize an empty result list and an empty stack.
-     * 2. Start with the root node as the `currentNode`.
-     * 3. Loop as long as `currentNode` is not null or the stack is not empty.
-     * 4. Inside the loop, push all left children onto the stack until you reach
-     *    the leftmost node (`currentNode` becomes null).
-     * 5. Once at the leftmost node, pop from the stack. This is the node to be
-     *    "visited". Add its value to the result list.
-     * 6. Move to the right child of the popped node and repeat the process.
-     *
-     * Time Complexity: O(N), where N is the number of nodes.
-     * Space Complexity: O(H), where H is the height of the tree, for the stack.
-     *
+     * 
+     * Time Complexity: O(n) where n is the number of nodes in the tree.
+     * Each node is visited exactly once.
+     * 
+     * Space Complexity: O(h) where h is the height of the tree.
+     * In the worst case (a skewed tree), this could be O(n).
+     * In a balanced tree, it's O(log n).
+     * 
      * @param root The root node of the binary tree.
      * @return A list of integers representing the in-order traversal of the tree.
      */
     public List<Integer> inorderTraversal(TreeNode root) {
+        // Initialize result list to store the traversal order
         List<Integer> result = new ArrayList<>();
-        // A stack is used to simulate the recursion.
-        Stack<TreeNode> stack = new Stack<>();
+        
+        // Handle the edge case of an empty tree
+        if (root == null) {
+            return result;
+        }
+        
+        // Using Deque interface with LinkedList implementation as a stack
+        // Deque is preferred over the legacy Stack class because:
+        // 1. Stack class is synchronized (thread-safe) which adds unnecessary overhead
+        // 2. Deque provides a more complete and consistent set of LIFO operations
+        // 3. It's the recommended approach in modern Java
+        Deque<TreeNode> stack = new LinkedList<>();
+        
+        // Start with the root node
         TreeNode currentNode = root;
 
-        // Loop as long as there are nodes to process or nodes in the stack.
+        // Continue traversal as long as there are nodes to process or nodes in the stack
+        // The condition ensures we process all nodes in the tree
         while (currentNode != null || !stack.isEmpty()) {
-            // 1. Traverse to the leftmost node of the current subtree.
-            // Push all nodes encountered along the way onto the stack.
+            // Phase 1: Traverse to the leftmost node, pushing all nodes along the path
+            // This ensures we visit nodes in the correct in-order sequence
             while (currentNode != null) {
-                stack.push(currentNode);
-                currentNode = currentNode.left;
+                stack.push(currentNode); // Add current node to stack
+                currentNode = currentNode.left; // Move to left child
             }
 
-            // At this point, `currentNode` is null, and the stack top is the
-            // node that should be visited next according to in-order rules.
+            // Phase 2: Process the node at the top of the stack
+            // This is the "Root" part of the Left -> Root -> Right pattern
+            currentNode = stack.pop(); // Remove and get the top node from stack
+            result.add(currentNode.val); // Add node's value to result list
 
-            // 2. Visit the node at the top of the stack.
-            currentNode = stack.pop();
-            result.add(currentNode.val);
-
-            // 3. Move to the right subtree to start the process over for the right side.
+            // Phase 3: Move to the right subtree to continue the process
+            // This ensures we process the right subtree after visiting the root
             currentNode = currentNode.right;
         }
 
         return result;
     }
-}
-
-/*
---- Alternative Recursive Solution ---
-
-class Solution {
-    public List<Integer> inorderTraversal(TreeNode root) {
+    
+    /**
+     * Alternative implementation using Morris Traversal.
+     * 
+     * This approach modifies the tree temporarily to create links back to ancestors,
+     * allowing traversal without using extra space for a stack.
+     * 
+     * Time Complexity: O(n) - each node is visited a constant number of times
+     * Space Complexity: O(1) - no additional space proportional to tree size
+     * 
+     * Note: This method temporarily modifies the tree structure but restores it
+     * before returning. It's more complex but saves space for very deep trees.
+     * 
+     * @param root The root node of the binary tree.
+     * @return A list of integers representing the in-order traversal of the tree.
+     */
+    public List<Integer> inorderTraversalMorris(TreeNode root) {
         List<Integer> result = new ArrayList<>();
-        inorderHelper(root, result);
+        TreeNode curr = root;
+        
+        while (curr != null) {
+            if (curr.left == null) {
+                // If no left child, process current node and move to right
+                result.add(curr.val);
+                curr = curr.right;
+            } else {
+                // Find the inorder predecessor (rightmost node in left subtree)
+                TreeNode predecessor = curr.left;
+                while (predecessor.right != null && predecessor.right != curr) {
+                    predecessor = predecessor.right;
+                }
+                
+                if (predecessor.right == null) {
+                    // Create a temporary link back to current node
+                    predecessor.right = curr;
+                    curr = curr.left;
+                } else {
+                    // Temporary link already exists, remove it and process current node
+                    predecessor.right = null;
+                    result.add(curr.val);
+                    curr = curr.right;
+                }
+            }
+        }
+        
         return result;
     }
-
-    private void inorderHelper(TreeNode node, List<Integer> result) {
-        // Base case: If the node is null, we've reached the end of a branch.
-        if (node == null) {
-            return;
-        }
-
-        // 1. Traverse the left subtree.
-        inorderHelper(node.left, result);
-
-        // 2. Visit the root node (add its value to the list).
-        result.add(node.val);
-
-        // 3. Traverse the right subtree.
-        inorderHelper(node.right, result);
-    }
 }
-*/
