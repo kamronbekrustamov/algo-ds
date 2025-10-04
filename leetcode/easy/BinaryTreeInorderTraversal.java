@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.LinkedList;
+import java.util.ArrayDeque;
 import java.util.Deque;
 
 /**
@@ -55,7 +55,7 @@ class Solution {
         // 1. Stack class is synchronized (thread-safe) which adds unnecessary overhead
         // 2. Deque provides a more complete and consistent set of LIFO operations
         // 3. It's the recommended approach in modern Java
-        Deque<TreeNode> stack = new LinkedList<>();
+        Deque<TreeNode> stack = new ArrayDeque<>();
         
         // Start with the root node
         TreeNode currentNode = root;
