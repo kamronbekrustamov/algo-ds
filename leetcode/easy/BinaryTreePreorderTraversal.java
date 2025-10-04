@@ -1,7 +1,8 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Stack;
+import java.util.LinkedList;
+import java.util.Deque;
 
 /**
  * Definition for a binary tree node.
@@ -18,84 +19,120 @@ import java.util.Stack;
  *     }
  * }
  */
+
+/**
+ * Solution class for binary tree preorder traversal.
+ * 
+ * Preorder traversal follows the pattern: Root -> Left -> Right
+ * 
+ * This implementation uses an iterative approach with a stack to simulate the
+ * recursive call stack, avoiding potential stack overflow issues with deep trees.
+ */
 class Solution {
     /**
-     * Performs a pre-order traversal of a binary tree using an iterative approach.
-     *
-     * The pre-order traversal algorithm follows the pattern:
-     * 1. Visit the root node.
-     * 2. Traverse the left subtree.
-     * 3. Traverse the right subtree.
-     *
-     * This solution uses a Stack to simulate the recursive behavior of the traversal.
-     *
-     * Algorithm Breakdown:
-     * 1. Handle the edge case of an empty tree.
-     * 2. Initialize a Stack and push the root node onto it.
-     * 3. Loop as long as the stack is not empty.
-     * 4. In each iteration, pop a node from the stack. This is the "visit" step.
-     * 5. Add the popped node's value to the result list.
-     * 6. Crucially, push the right child onto the stack first, then the left child.
-     *    This ensures that the left child will be on top of the stack and will be
-     *    processed next, correctly following the pre-order sequence.
-     *
-     * Time Complexity: O(N), where N is the number of nodes, as each node is
-     *                  pushed and popped exactly once.
-     * Space Complexity: O(H), where H is the height of the tree, for the stack.
-     *                   In the worst case (a skewed tree), this can be O(N).
-     *
+     * Performs a preorder traversal of a binary tree using an iterative approach.
+     * 
+     * Time Complexity: O(n) where n is the number of nodes in the tree.
+     * Each node is visited exactly once.
+     * 
+     * Space Complexity: O(h) where h is the height of the tree.
+     * In the worst case (a skewed tree), this could be O(n).
+     * In a balanced tree, it's O(log n).
+     * 
      * @param root The root node of the binary tree.
-     * @return A list of integers representing the pre-order traversal of the tree.
+     * @return A list of integers representing the preorder traversal of the tree.
      */
     public List<Integer> preorderTraversal(TreeNode root) {
+        // Handle the edge case of an empty tree
         if (root == null) {
             return Collections.emptyList();
         }
 
+        // Result list to store the traversal order
         List<Integer> result = new ArrayList<>();
-        Stack<TreeNode> stack = new Stack<>();
+        
+        // Using Deque interface with LinkedList implementation as a stack
+        // Deque is preferred over the legacy Stack class because:
+        // 1. Stack class is synchronized (thread-safe) which adds unnecessary overhead
+        // 2. Deque provides a more complete and consistent set of LIFO operations
+        // 3. It's the recommended approach in modern Java
+        Deque<TreeNode> stack = new LinkedList<>();
+        
+        // Initialize the stack with the root node to start traversal
         stack.push(root);
 
+        // Continue processing until all nodes have been visited
         while (!stack.isEmpty()) {
-            // 4. Pop a node from the stack to visit it.
+            // Pop the top node from the stack (LIFO order)
             TreeNode currentNode = stack.pop();
-            // 5. Add the node's value to the result.
+            
+            // Process the current node by adding its value to the result list
+            // This is the "Visit" step in the Root -> Left -> Right pattern
             result.add(currentNode.val);
 
-            // 6. Push the right child first, so the left child is processed first.
+            // For preorder traversal, we need to process left subtree before right subtree
+            // Since stack is LIFO, we push right child first so that left child is on top
+            // This ensures left subtree is processed before right subtree
+            
+            // Push right child first (will be processed after left subtree)
             if (currentNode.right != null) {
                 stack.push(currentNode.right);
             }
+            
+            // Push left child last (will be processed next)
             if (currentNode.left != null) {
                 stack.push(currentNode.left);
             }
         }
+        
         return result;
     }
-}
-
-/*
---- Alternative Recursive Solution ---
-
-class Solution {
-    public List<Integer> preorderTraversal(TreeNode root) {
+    
+    /**
+     * Alternative implementation using Morris Traversal.
+     * 
+     * This approach modifies the tree temporarily to create links back to ancestors,
+     * allowing traversal without using extra space for a stack.
+     * 
+     * Time Complexity: O(n) - each node is visited a constant number of times
+     * Space Complexity: O(1) - no additional space proportional to tree size
+     * 
+     * Note: This method temporarily modifies the tree structure but restores it
+     * before returning. It's more complex but saves space for very deep trees.
+     * 
+     * @param root The root node of the binary tree.
+     * @return A list of integers representing the preorder traversal of the tree.
+     */
+    public List<Integer> preorderTraversalMorris(TreeNode root) {
         List<Integer> result = new ArrayList<>();
-        preorderHelper(root, result);
+        TreeNode curr = root;
+        
+        while (curr != null) {
+            if (curr.left == null) {
+                // If no left child, process current node and move to right
+                result.add(curr.val);
+                curr = curr.right;
+            } else {
+                // Find the inorder predecessor (rightmost node in left subtree)
+                TreeNode predecessor = curr.left;
+                while (predecessor.right != null && predecessor.right != curr) {
+                    predecessor = predecessor.right;
+                }
+                
+                if (predecessor.right == null) {
+                    // Create a temporary link back to current node
+                    predecessor.right = curr;
+                    // Process current node before moving to left (preorder)
+                    result.add(curr.val);
+                    curr = curr.left;
+                } else {
+                    // Temporary link already exists, remove it and move to right
+                    predecessor.right = null;
+                    curr = curr.right;
+                }
+            }
+        }
+        
         return result;
     }
-
-    private void preorderHelper(TreeNode node, List<Integer> result) {
-        // Base case: If the node is null, do nothing.
-        if (node == null) {
-            return;
-        }
-
-        // 1. Visit the root node.
-        result.add(node.val);
-        // 2. Traverse the left subtree.
-        preorderHelper(node.left, result);
-        // 3. Traverse the right subtree.
-        preorderHelper(node.right, result);
-    }
 }
-*/
