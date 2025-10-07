@@ -1,8 +1,7 @@
 from typing import List
 
 class Solution:
-    @staticmethod
-    def nextGreatestLetter(letters: List[str], target: str) -> str:
+    def nextGreatestLetter(self, letters: List[str], target: str) -> str:
         """
         Finds the smallest character in the list that is larger than the target.
         The letters list is sorted and wraps around.
