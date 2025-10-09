@@ -29,11 +29,11 @@ class Solution {
      * @param current_xor_total The XOR total of the subset built so far.
      * @return The sum of XOR totals for all subsets that can be formed from this point.
      */
-    private int calculateSum(int[] nums, int index, int current_xor_total) {
+    private int calculateSum(int[] nums, int index, int currentXorTotal) {
         // Base case: If we have considered all numbers, the XOR total of the
         // current subset is complete. Return it to be added to the overall sum.
         if (index == nums.length) {
-            return current_xor_total;
+            return currentXorTotal;
         }
 
         // --- Recursive Step ---
@@ -42,15 +42,15 @@ class Solution {
         // 1. Include `nums[index]` in the current subset.
         //    We update the XOR total by XORing it with the current number.
         //    Then, we recurse to the next element.
-        int sum_with_current = calculateSum(nums, index + 1, current_xor_total ^ nums[index]);
+        int sumWithCurrent = calculateSum(nums, index + 1, currentXorTotal ^ nums[index]);
 
         // 2. Exclude `nums[index]` from the current subset.
         //    The XOR total remains the same.
         //    Then, we recurse to the next element.
-        int sum_without_current = calculateSum(nums, index + 1, current_xor_total);
+        int sumWithoutCurrent = calculateSum(nums, index + 1, currentXorTotal);
 
         // The total sum from this point is the sum of the results from both branches.
-        return sum_with_current + sum_without_current;
+        return sumWithCurrent + sumWithoutCurrent;
     }
 
     /*
@@ -82,7 +82,7 @@ class Solution {
     //  * This is equivalent to:
     //  * (OR of all numbers) * (2^(n-1))
     //  *
-    //  * The OR of all numbers (`bitwise_or_total`) gives us a number where the
+    //  * The OR of all numbers (`bitwiseOrTotal`) gives us a number where the
     //  * i-th bit is 1 if and only if the i-th bit was set in at least one of the
     //  * original numbers.
     //  *
@@ -94,9 +94,9 @@ class Solution {
     //  */
     // public int subsetXORSum_linear(int[] nums) {
     //     int n = nums.length;
-    //     int bitwise_or_total = 0;
+    //     int bitwiseOrTotal = 0;
     //     for (int num : nums) {
-    //         bitwise_or_total |= num;
+    //         bitwiseOrTotal |= num;
     //     }
     //
     //     // The multiplier is 2^(n-1)
@@ -104,7 +104,7 @@ class Solution {
     //     if (n == 0) return 0;
     //     int multiplier = 1 << (n - 1);
     //
-    //     return bitwise_or_total * multiplier;
+    //     return bitwiseOrTotal * multiplier;
     // }
     
 }
