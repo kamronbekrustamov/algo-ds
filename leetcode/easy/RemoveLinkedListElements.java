@@ -34,8 +34,8 @@ class Solution {
      * Space Complexity: O(1), as we only use a few extra pointers.
      */
     public ListNode removeElements(ListNode head, int val) {
-        ListNode dummy_head = new ListNode(0, head);
-        ListNode current = dummy_head;
+        ListNode dummyHead = new ListNode(0, head);
+        ListNode current = dummyHead;
 
         while (current.next != null) {
             if (current.next.val == val) {
@@ -45,6 +45,6 @@ class Solution {
             }
         }
 
-        return dummy_head.next;
+        return dummyHead.next;
     }
 }
