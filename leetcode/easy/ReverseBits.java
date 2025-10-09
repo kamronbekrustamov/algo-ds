@@ -26,8 +26,8 @@ class Solution {
         int res = 0;
         for (int i = 0; i < 32; i++) {
             res <<= 1;
-            int last_bit = n & 1;
-            res |= last_bit;
+            int lastBit = n & 1;
+            res |= lastBit;
             n >>>= 1; // Use unsigned right shift
         }
         return res;
