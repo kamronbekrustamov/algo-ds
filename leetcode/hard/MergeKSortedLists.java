@@ -37,15 +37,15 @@ class Solution {
             return null;
         }
 
-        int num_lists = lists.length;
+        int numLists = lists.length;
 
-        while (num_lists > 1) {
-            for (int i = 0; i < num_lists; i += 2) {
+        while (numLists > 1) {
+            for (int i = 0; i < numLists; i += 2) {
                 ListNode list1 = lists[i];
-                ListNode list2 = (i + 1) < num_lists ? lists[i + 1] : null;
+                ListNode list2 = (i + 1) < numLists ? lists[i + 1] : null;
                 lists[i / 2] = mergeTwoLists(list1, list2);
             }
-            num_lists = (num_lists + 1) / 2;
+            numLists = (numLists + 1) / 2;
         }
 
         return lists[0];
