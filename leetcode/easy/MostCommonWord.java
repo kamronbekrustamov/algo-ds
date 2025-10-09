@@ -30,38 +30,22 @@ class Solution {
      *         and it is unique.
      */
     public String mostCommonWord(String paragraph, String[] banned) {
-        // Convert the banned words array into a HashSet for efficient O(1) average time complexity lookups.
-        Set<String> banned_set = new HashSet<>(Arrays.asList(banned));
-
-        // Convert the paragraph to lowercase and split it into words.
-        // The regex "\\W+" splits by any non-word character (punctuation, spaces, etc.).
-        // This effectively cleans the words from punctuation.
+        Set<String> bannedSet = new HashSet<>(Arrays.asList(banned));
         String[] words = paragraph.toLowerCase().split("\\W+");
+        Map<String, Integer> wordCounts = new HashMap<>();
 
-        // Use a HashMap to store the frequency of each non-banned word.
-        Map<String, Integer> word_counts = new HashMap<>();
-
-        // Iterate through the cleaned words.
         for (String word : words) {
-            // Ensure the word is not empty (can happen with multiple delimiters) and not banned.
-            if (!word.isEmpty() && !banned_set.contains(word)) {
-                // Increment the count for the current word. If it's not in the map, default to 0.
-                word_counts.put(word, word_counts.getOrDefault(word, 0) + 1);
+            if (!word.isEmpty() && !bannedSet.contains(word)) {
+                wordCounts.put(word, wordCounts.getOrDefault(word, 0) + 1);
             }
         }
 
-        // The problem guarantees at least one non-banned word, so word_counts will not be empty.
-        // Find the word with the maximum count.
-        String most_common_word = "";
-        int max_count = 0;
-
-        // Iterate through the entries in the word_counts map.
-        for (Map.Entry<String, Integer> entry : word_counts.entrySet()) {
-            // If the current word's count is greater than the current maximum count,
-            // update the most common word and the maximum count.
-            if (entry.getValue() > max_count) {
-                max_count = entry.getValue();
-                most_common_word = entry.getKey();
+        String mostCommonWord = "";
+        int maxCount = 0;
+        for (Map.Entry<String, Integer> entry : wordCounts.entrySet()) {
+            if (entry.getValue() > maxCount) {
+                maxCount = entry.getValue();
+                mostCommonWord = entry.getKey();
             }
         }
 
