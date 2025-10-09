@@ -48,28 +48,28 @@ class Solution {
             high += num;
         }
 
-        long min_largest_sum = high;
+        long minLargestSum = high;
 
         while (low <= high) {
             long mid = low + (high - low) / 2;
 
-            int subarrays_count = 1;
-            long current_sum = 0;
+            int subarraysCount = 1;
+            long currentSum = 0;
             for (int num : nums) {
-                current_sum += num;
-                if (current_sum > mid) {
-                    subarrays_count++;
-                    current_sum = num;
+                currentSum += num;
+                if (currentSum > mid) {
+                    subarraysCount++;
+                    currentSum = num;
                 }
             }
 
-            if (subarrays_count <= k) {
-                min_largest_sum = mid;
+            if (subarraysCount <= k) {
+                minLargestSum = mid;
                 high = mid - 1;
             } else {
                 low = mid + 1;
             }
         }
-        return (int) min_largest_sum;
+        return (int) minLargestSum;
     }
 }
