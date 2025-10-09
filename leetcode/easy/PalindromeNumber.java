@@ -29,12 +29,12 @@ class Solution {
             return false;
         }
 
-        int reverted_number = 0;
-        while (x > reverted_number) {
-            reverted_number = reverted_number * 10 + x % 10;
+        int revertedNumber = 0;
+        while (x > revertedNumber) {
+            revertedNumber = revertedNumber * 10 + x % 10;
             x /= 10;
         }
 
-        return x == reverted_number || x == reverted_number / 10;
+        return x == revertedNumber || x == revertedNumber / 10;
     }
 }
