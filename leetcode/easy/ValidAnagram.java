@@ -27,14 +27,14 @@ class Solution {
         if (s.length() != t.length()) {
             return false;
         }
-        int[] char_map = new int[26];
+        int[] charMap = new int[26];
         for (char c : s.toCharArray()) {
-            char_map[c - 'a']++;
+            charMap[c - 'a']++;
         }
         for (char c : t.toCharArray()) {
-            char_map[c - 'a']--;
+            charMap[c - 'a']--;
         }
-        for (int count : char_map) {
+        for (int count : charMap) {
             if (count != 0) {
                 return false;
             }
