@@ -26,21 +26,13 @@ class Solution {
      * @return true if a cycle is detected, false otherwise.
      */
     public boolean hasCycle(ListNode head) {
-        // Initialize slow and fast pointers to the head of the list.
-        ListNode slow_pointer = head;
-        ListNode fast_pointer = head;
+        ListNode slowPointer = head;
+        ListNode fastPointer = head;
 
-        // Traverse the list with two pointers.
-        // The loop continues as long as the fast pointer and its next node are not null,
-        // ensuring valid moves for the fast pointer.
-        while (fast_pointer != null && fast_pointer.next != null) {
-            // Move slow pointer one step.
-            slow_pointer = slow_pointer.next;
-            // Move fast pointer two steps.
-            fast_pointer = fast_pointer.next.next;
-
-            // If the pointers meet, a cycle is detected.
-            if (slow_pointer == fast_pointer) {
+        while (fastPointer != null && fastPointer.next != null) {
+            slowPointer = slowPointer.next;
+            fastPointer = fastPointer.next.next;
+            if (slowPointer == fastPointer) {
                 return true;
             }
         }
