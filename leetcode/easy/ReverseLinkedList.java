@@ -30,16 +30,16 @@ class Solution {
      * Space Complexity: O(1), as we only use a few extra pointers.
      */
     public ListNode reverseList(ListNode head) {
-        ListNode prev_node = null;
-        ListNode current_node = head;
+        ListNode prevNode = null;
+        ListNode currentNode = head;
 
-        while (current_node != null) {
-            ListNode next_node = current_node.next;
-            current_node.next = prev_node;
-            prev_node = current_node;
-            current_node = next_node;
+        while (currentNode != null) {
+            ListNode nextNode = currentNode.next;
+            currentNode.next = prevNode;
+            prevNode = currentNode;
+            currentNode = nextNode;
         }
 
-        return prev_node;
+        return prevNode;
     }
 }
