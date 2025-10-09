@@ -34,15 +34,15 @@ class Solution {
 
         int i = 0;
         while (i < n) {
-            int correct_idx = nums[i] - 1;
+            int correctIdx = nums[i] - 1;
             // Check if the number is in the valid range [1, n] and is not in its correct place,
-            // and also check `nums[i] != nums[correct_idx]` to avoid infinite loops
+            // and also check `nums[i] != nums[correctIdx]` to avoid infinite loops
             // when there are duplicate numbers.
-            if (nums[i] > 0 && nums[i] <= n && nums[i] != nums[correct_idx]) {
-                // Swap nums[i] and nums[correct_idx]
+            if (nums[i] > 0 && nums[i] <= n && nums[i] != nums[correctIdx]) {
+                // Swap nums[i] and nums[correctIdx]
                 int temp = nums[i];
-                nums[i] = nums[correct_idx];
-                nums[correct_idx] = temp;
+                nums[i] = nums[correctIdx];
+                nums[correctIdx] = temp;
             } else {
                 // If the number is out of range, negative, or already in the correct place,
                 // move to the next element.
