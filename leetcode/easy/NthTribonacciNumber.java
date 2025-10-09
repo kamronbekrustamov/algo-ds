@@ -28,10 +28,10 @@ class Solution {
         int t2 = 1;
 
         for (int i = 3; i <= n; i++) {
-            int next_t = t0 + t1 + t2;
+            int nextT = t0 + t1 + t2;
             t0 = t1;
             t1 = t2;
-            t2 = next_t;
+            t2 = nextT;
         }
 
         return t2;
