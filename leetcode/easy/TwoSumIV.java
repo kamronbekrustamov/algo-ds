@@ -44,15 +44,15 @@ class Solution {
         if (root == null) {
             return false;
         }
-        Set<Integer> seen_values = new HashSet<>();
+        Set<Integer> seenValues = new HashSet<>();
         Queue<TreeNode> queue = new LinkedList<>();
         queue.add(root);
         while (!queue.isEmpty()) {
             TreeNode node = queue.poll();
-            if (seen_values.contains(k - node.val)) {
+            if (seenValues.contains(k - node.val)) {
                 return true;
             }
-            seen_values.add(node.val);
+            seenValues.add(node.val);
             if (node.left != null) {
                 queue.add(node.left);
             }
