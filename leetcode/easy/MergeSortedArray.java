@@ -25,31 +25,23 @@ class Solution {
         int p1 = m - 1;
         // p2 points to the last element of nums2.
         int p2 = n - 1;
-        // p_merged points to the last position in nums1 where a merged element will be placed.
-        int p_merged = m + n - 1;
+        int pMerged = m + n - 1;
 
-        // Iterate while there are elements to compare in both nums1 (initial part) and nums2.
         while (p1 >= 0 && p2 >= 0) {
-            // Compare the elements at p1 and p2.
             if (nums1[p1] > nums2[p2]) {
-                // If nums1[p1] is greater, place it at the current merged position.
-                nums1[p_merged] = nums1[p1];
-                p1--; // Move p1 to the left.
+                nums1[pMerged] = nums1[p1];
+                p1--;
             } else {
-                // If nums2[p2] is greater or equal, place it at the current merged position.
-                nums1[p_merged] = nums2[p2];
-                p2--; // Move p2 to the left.
+                nums1[pMerged] = nums2[p2];
+                p2--;
             }
-            p_merged--; // Move merged pointer to the left.
+            pMerged--;
         }
 
-        // If there are remaining elements in nums2 (meaning nums1's initial part was exhausted first),
-        // copy them directly to the beginning of nums1.
-        // No need to handle remaining elements in nums1 because they are already in their correct sorted positions.
         while (p2 >= 0) {
-            nums1[p_merged] = nums2[p2];
+            nums1[pMerged] = nums2[p2];
             p2--;
-            p_merged--;
+            pMerged--;
         }
     }
 }
