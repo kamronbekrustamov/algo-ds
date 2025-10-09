@@ -12,7 +12,7 @@ class TreeNode {
 }
 
 class Solution {
-    private int max_sum;
+    private int maxSum;
 
     /**
      * Finds the maximum path sum in a binary tree. A path can start and end at any
@@ -34,9 +34,9 @@ class Solution {
      *                   In the worst case (skewed tree), H can be N. In the best case (balanced tree), H is logN.
      */
     public int maxPathSum(TreeNode root) {
-        max_sum = Integer.MIN_VALUE; // Initialize with smallest possible integer value
+        maxSum = Integer.MIN_VALUE; // Initialize with smallest possible integer value
         dfs(root);
-        return max_sum;
+        return maxSum;
     }
 
     /**
@@ -54,15 +54,15 @@ class Solution {
 
         // Get the max gain from the left and right subtrees.
         // We use Math.max(..., 0) because we don't want to include sub-paths with negative sums.
-        int left_gain = Math.max(dfs(node.left), 0);
-        int right_gain = Math.max(dfs(node.right), 0);
+        int leftGain = Math.max(dfs(node.left), 0);
+        int rightGain = Math.max(dfs(node.right), 0);
 
         // Update the overall maximum path sum. This path includes the current node
         // and can potentially "split" across its left and right children.
-        max_sum = Math.max(max_sum, node.val + left_gain + right_gain);
+        maxSum = Math.max(maxSum, node.val + leftGain + rightGain);
 
         // Return the maximum gain for a path that can be extended upwards.
         // This path cannot split, so it must include the node and at most one child.
-        return node.val + Math.max(left_gain, right_gain);
+        return node.val + Math.max(leftGain, rightGain);
     }
 }
