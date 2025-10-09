@@ -30,22 +30,22 @@ class Solution {
      * Space Complexity: O(R * C) to store the new reshaped matrix.
      */
     public int[][] matrixReshape(int[][] mat, int r, int c) {
-        int row_count = mat.length;
-        int col_count = mat[0].length;
+        int rowCount = mat.length;
+        int colCount = mat[0].length;
 
-        if (row_count * col_count != r * c) {
+        if (rowCount * colCount != r * c) {
             return mat;
         }
 
-        int[][] reshaped_matrix = new int[r][c];
+        int[][] reshapedMatrix = new int[r][c];
         for (int i = 0; i < r; i++) {
             for (int j = 0; j < c; j++) {
-                int linear_index = i * c + j;
-                int original_row = linear_index / col_count;
-                int original_col = linear_index % col_count;
-                reshaped_matrix[i][j] = mat[original_row][original_col];
+                int linearIndex = i * c + j;
+                int originalRow = linearIndex / colCount;
+                int originalCol = linearIndex % colCount;
+                reshapedMatrix[i][j] = mat[originalRow][originalCol];
             }
         }
-        return reshaped_matrix;
+        return reshapedMatrix;
     }
 }
