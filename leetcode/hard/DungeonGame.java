@@ -38,18 +38,18 @@ class Solution {
 
         for (int i = m - 1; i >= 0; i--) {
             for (int j = n - 1; j >= 0; j--) {
-                int min_health_on_exit;
+                int minHealthOnExit;
                 if (i == m - 1 && j == n - 1) {
-                    min_health_on_exit = 1;
+                    minHealthOnExit = 1;
                 } else if (i == m - 1) {
-                    min_health_on_exit = dungeon[i][j + 1];
+                    minHealthOnExit = dungeon[i][j + 1];
                 } else if (j == n - 1) {
-                    min_health_on_exit = dungeon[i + 1][j];
+                    minHealthOnExit = dungeon[i + 1][j];
                 } else {
-                    min_health_on_exit = Math.min(dungeon[i + 1][j], dungeon[i][j + 1]);
+                    minHealthOnExit = Math.min(dungeon[i + 1][j], dungeon[i][j + 1]);
                 }
-                int health_needed = Math.max(1, min_health_on_exit - dungeon[i][j]);
-                dungeon[i][j] = health_needed;
+                int healthNeeded = Math.max(1, minHealthOnExit - dungeon[i][j]);
+                dungeon[i][j] = healthNeeded;
             }
         }
         return dungeon[0][0];
