@@ -39,16 +39,16 @@ class Solution {
             return result;
         }
 
-        int start_index = 0;
+        int startIndex = 0;
         for (int i = 1; i <= s.length(); i++) {
             if (i == s.length() || s.charAt(i) != s.charAt(i - 1)) {
-                if (i - start_index >= 3) {
+                if (i - startIndex >= 3) {
                     List<Integer> group = new ArrayList<>();
-                    group.add(start_index);
+                    group.add(startIndex);
                     group.add(i - 1);
                     result.add(group);
                 }
-                start_index = i;
+                startIndex = i;
             }
         }
         return result;
