@@ -42,13 +42,8 @@ class Solution {
             return 0;
         }
 
-        // Recursively calculate the maximum depth of the left subtree.
-        int left_depth = maxDepth(root.left);
-        // Recursively calculate the maximum depth of the right subtree.
-        int right_depth = maxDepth(root.right);
-
-        // The maximum depth of the current tree is 1 (for the current node) plus
-        // the maximum depth found in its left or right subtrees.
-        return 1 + Math.max(left_depth, right_depth);
+        int leftDepth = maxDepth(root.left);
+        int rightDepth = maxDepth(root.right);
+        return 1 + Math.max(leftDepth, rightDepth);
     }
 }
