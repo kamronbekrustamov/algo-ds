@@ -44,9 +44,9 @@ class Solution {
             return false;
         }
 
-        boolean is_leaf = (root.left == null && root.right == null);
+        boolean isLeaf = (root.left == null && root.right == null);
 
-        if (is_leaf) {
+        if (isLeaf) {
             return root.val == targetSum;
         }
 
