@@ -25,15 +25,15 @@ class Solution {
         int n = nums.length;
 
         // Calculate the expected sum of numbers from 0 to n using Gauss's formula.
-        int expected_sum = n * (n + 1) / 2;
+        int expectedSum = n * (n + 1) / 2;
 
         // Calculate the actual sum of numbers present in the given array.
-        int actual_sum = 0;
+        int actualSum = 0;
         for (int num : nums) {
             actual_sum += num;
         }
 
         // The missing number is the difference between the expected sum and the actual sum.
-        return expected_sum - actual_sum;
+        return expectedSum - actualSum;
     }
 }
