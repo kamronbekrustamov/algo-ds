@@ -23,13 +23,13 @@ class Solution {
      * Space Complexity: O(N) in the worst case, where we store all numbers in the HashMap.
      */
     public int[] twoSum(int[] nums, int target) {
-        HashMap<Integer, Integer> seen_map = new HashMap<>();
+        HashMap<Integer, Integer> seenMap = new HashMap<>();
         for (int i = 0; i < nums.length; i++) {
             int complement = target - nums[i];
-            if (seen_map.containsKey(complement)) {
-                return new int[] { seen_map.get(complement), i };
+            if (seenMap.containsKey(complement)) {
+                return new int[] { seenMap.get(complement), i };
             }
-            seen_map.put(nums[i], i);
+            seenMap.put(nums[i], i);
         }
         return new int[0];
     }
