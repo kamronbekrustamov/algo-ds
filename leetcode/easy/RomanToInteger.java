@@ -35,28 +35,28 @@ class Solution {
      * Space Complexity: O(1) for the map (fixed size) and a few variables.
      */
     public int romanToInt(String s) {
-        Map<Character, Integer> roman_map = new HashMap<>();
-        roman_map.put('I', 1);
-        roman_map.put('V', 5);
-        roman_map.put('X', 10);
-        roman_map.put('L', 50);
-        roman_map.put('C', 100);
-        roman_map.put('D', 500);
-        roman_map.put('M', 1000);
+        Map<Character, Integer> romanMap = new HashMap<>();
+        romanMap.put('I', 1);
+        romanMap.put('V', 5);
+        romanMap.put('X', 10);
+        romanMap.put('L', 50);
+        romanMap.put('C', 100);
+        romanMap.put('D', 500);
+        romanMap.put('M', 1000);
 
         int result = 0;
-        int prev_value = 0;
+        int prevValue = 0;
 
         for (int i = s.length() - 1; i >= 0; i--) {
             char c = s.charAt(i);
-            int current_value = roman_map.get(c);
+            int currentValue = romanMap.get(c);
 
-            if (current_value < prev_value) {
-                result -= current_value;
+            if (currentValue < prevValue) {
+                result -= currentValue;
             } else {
-                result += current_value;
+                result += currentValue;
             }
-            prev_value = current_value;
+            prevValue = currentValue;
         }
 
         return result;
