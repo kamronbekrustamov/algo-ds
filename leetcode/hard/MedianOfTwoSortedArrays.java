@@ -47,29 +47,29 @@ class Solution {
 
         int m = nums1.length;
         int n = nums2.length;
-        int total_len = m + n;
-        int half_len = total_len / 2;
+        int totalLen = m + n;
+        int halfLen = totalLen / 2;
 
         int low = 0;
         int high = m;
 
         while (low <= high) {
             int partition1 = low + (high - low) / 2;
-            int partition2 = half_len - partition1;
+            int partition2 = halfLen - partition1;
 
-            double max_left1 = (partition1 == 0) ? Double.NEGATIVE_INFINITY : nums1[partition1 - 1];
-            double min_right1 = (partition1 == m) ? Double.POSITIVE_INFINITY : nums1[partition1];
+            double maxLeft1 = (partition1 == 0) ? Double.NEGATIVE_INFINITY : nums1[partition1 - 1];
+            double minRight1 = (partition1 == m) ? Double.POSITIVE_INFINITY : nums1[partition1];
 
-            double max_left2 = (partition2 == 0) ? Double.NEGATIVE_INFINITY : nums2[partition2 - 1];
-            double min_right2 = (partition2 == n) ? Double.POSITIVE_INFINITY : nums2[partition2];
+            double maxLeft2 = (partition2 == 0) ? Double.NEGATIVE_INFINITY : nums2[partition2 - 1];
+            double minRight2 = (partition2 == n) ? Double.POSITIVE_INFINITY : nums2[partition2];
 
-            if (max_left1 <= min_right2 && max_left2 <= min_right1) {
-                if (total_len % 2 == 1) {
-                    return Math.min(min_right1, min_right2);
+            if (maxLeft1 <= minRight2 && maxLeft2 <= minRight1) {
+                if (totalLen % 2 == 1) {
+                    return Math.min(minRight1, minRight2);
                 } else {
-                    return (Math.max(max_left1, max_left2) + Math.min(min_right1, min_right2)) / 2.0;
+                    return (Math.max(maxLeft1, maxLeft2) + Math.min(minRight1, minRight2)) / 2.0;
                 }
-            } else if (max_left1 > min_right2) {
+            } else if (maxLeft1 > minRight2) {
                 high = partition1 - 1;
             } else {
                 low = partition1 + 1;
