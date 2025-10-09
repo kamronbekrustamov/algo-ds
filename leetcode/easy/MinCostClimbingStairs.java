@@ -24,27 +24,15 @@ class Solution {
     public int minCostClimbingStairs(int[] cost) {
         // `cost_two_steps_back` stores the minimum cost to reach the step two steps before the current one.
         // Initially, to reach step -2 (before index 0), the cost is 0.
-        int cost_two_steps_back = 0;
-        // `cost_one_step_back` stores the minimum cost to reach the step one step before the current one.
-        // Initially, to reach step -1 (before index 0), the cost is 0.
-        int cost_one_step_back = 0;
+        int costTwoStepsBack = 0;
+        int costOneStepBack = 0;
 
-        // Iterate through each step's cost in the array.
-        for (int current_cost : cost) {
-            // The minimum cost to reach the current step is its own cost plus
-            // the minimum cost to reach either the step one step back or two steps back.
-            int min_cost_to_current = Math.min(cost_one_step_back, cost_two_steps_back) + current_cost;
-
-            // Update `cost_two_steps_back` to what `cost_one_step_back` was.
-            cost_two_steps_back = cost_one_step_back;
-            // Update `cost_one_step_back` to the newly calculated `min_cost_to_current`.
-            cost_one_step_back = min_cost_to_current;
+        for (int currentCost : cost) {
+            int minCostToCurrent = Math.min(costOneStepBack, costTwoStepsBack) + currentCost;
+            costTwoStepsBack = costOneStepBack;
+            costOneStepBack = minCostToCurrent;
         }
 
-        // After iterating through all steps, `cost_one_step_back` will hold the minimum cost
-        // to reach the last step, and `cost_two_steps_back` will hold the minimum cost
-        // to reach the second to last step. The top of the floor can be reached from either
-        // the last step or the second to last step. So, we return the minimum of these two.
-        return Math.min(cost_one_step_back, cost_two_steps_back);
+        return Math.min(costOneStepBack, costTwoStepsBack);
     }
 }
