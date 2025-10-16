@@ -1,18 +1,84 @@
+# -----------------------------------------------------------------------------
 # Virtual environment
+# -----------------------------------------------------------------------------
 venv/
 .venv/
+env/
+/bin/activate
+/Scripts/activate
 
-# Byte-compiled / optimized / c-extension files
+# -----------------------------------------------------------------------------
+# Byte-compiled / optimized / C-extension files
+# -----------------------------------------------------------------------------
 __pycache__/
 *.pyc
 *.pyd
 *.pyo
+*.egg
+*.whl
 
-# IDE-specific files (e.g., from VS Code, PyCharm)
-.vscode/
+# -----------------------------------------------------------------------------
+# IDE-specific files
+# -----------------------------------------------------------------------------
+# IntelliJ / PyCharm / WebStorm / PhpStorm etc.
 .idea/
+*.iws
+*.iml
+*.ipr
 
-# Other temporary files
-*.log
+# VS Code
+.vscode/
+
+# Eclipse
+.project
+.pydevproject
+.settings/
+
+# SublimeText
+*.sublime-workspace
+*.sublime-project
+
+# -----------------------------------------------------------------------------
+# Operating System files
+# -----------------------------------------------------------------------------
+# macOS
+.DS_Store
+.Trashes
+ehthumbs.db
+
+# Windows
+Thumbs.db
+
+# -----------------------------------------------------------------------------
+# Testing and Coverage
+# -----------------------------------------------------------------------------
+.coverage
+.tox/
+/htmlcov/
+/.pytest_cache/
+
+# -----------------------------------------------------------------------------
+# Distribution / packaging
+# -----------------------------------------------------------------------------
 dist/
 build/
+*.egg-info/
+/MANIFEST
+/setup.cfg
+
+# -----------------------------------------------------------------------------
+# Documentation
+# -----------------------------------------------------------------------------
+/docs/_build/
+
+# -----------------------------------------------------------------------------
+# Other temporary files
+# -----------------------------------------------------------------------------
+*.log
+*.sqlite3
+db.sqlite3
+/media/
+/static/
+
+# Jupyter Notebook files
+.ipynb_checkpoints
