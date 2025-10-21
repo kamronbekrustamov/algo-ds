@@ -1,6 +1,5 @@
 import java.util.ArrayDeque;
 import java.util.Deque;
-import java.util.Collections;
 
 /**
  * Solution class for simplifying a canonical file system path (e.g., converting "/home//foo/." to "/home/foo").
@@ -46,19 +45,16 @@ class Solution {
 
             // 2. Process the path component based on its value.
             switch (component) {
-                case ".":
-                    // Ignore the current directory reference. Do nothing.
-                    break;
-                case "..":
+                case "." -> {
+                }
+                case ".." ->
                     // Go up one directory level: remove the last element from the stack.
                     // pollLast() safely returns null if the stack is empty (at the root),
                     // which is the correct behavior for going "above" the root.
                     canonicalStack.pollLast();
-                    break;
-                default:
+                default ->
                     // A valid directory name: push it onto the stack.
                     canonicalStack.offerLast(component);
-                    break;
             }
 
             // Move the index to the position of the next slash found (or end of string).
