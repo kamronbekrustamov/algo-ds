@@ -39,16 +39,13 @@ class Solution {
         // The comparator should place the string 'a' before 'b' if 'a' is "larger" in this custom sense.
         // The current logic using (b + a).compareTo(a + b) achieves a descending sort
         // based on the custom "largest number" criteria.
-        Arrays.sort(numStrings, new Comparator<String>() {
-            @Override
-            public int compare(String a, String b) {
-                String order1 = a + b;
-                String order2 = b + a;
-                // We want descending order, so order2 (b+a) is compared to order1 (a+b).
-                // If order2 is lexicographically greater than order1, 'b' should come before 'a',
-                // and the comparator should return a positive value.
-                return order2.compareTo(order1);
-            }
+        Arrays.sort(numStrings, (a, b) -> {
+            String order1 = a + b;
+            String order2 = b + a;
+            // We want descending order, so order2 (b+a) is compared to order1 (a+b).
+            // If order2 is lexicographically greater than order1, 'b' should come before 'a',
+            // and the comparator should return a positive value.
+            return order2.compareTo(order1);
         });
 
         // 3. Handle the all-zero case.
