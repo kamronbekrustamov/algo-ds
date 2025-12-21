@@ -1,7 +1,3 @@
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-
 /**
  * Solves the problem of finding the minimum number of extra characters left
  * over when segmenting a string into dictionary words.
