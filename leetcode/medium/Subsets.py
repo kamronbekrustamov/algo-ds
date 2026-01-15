@@ -1,31 +1,27 @@
 from typing import List
 
-
 class Solution:
     def subsets(self, nums: List[int]) -> List[List[int]]:
         """
-        Generates all possible subsets (the power set) from a list of unique integers.
-        This is solved using a standard backtracking algorithm.
+        Generates the Power Set (all possible subsets) of a given integer array.
+        
+        Complexity:
+        - Time: O(n * 2^n) - There are 2^n subsets, and we iterate up to n times for each.
+        - Space: O(n * 2^n) - To store all subsets in the result list.
         """
+        n = len(nums)
+        # The total number of subsets is 2^n
+        subsets_count = 1 << n 
         result = []
-        current_subset = []
 
-        def backtrack(start_index: int):
-            """
-            Recursively builds subsets. `start_index` is used to avoid duplicate combinations.
-            """
-            # First, add a copy of the current subset to the result.
-            # This captures the subset at its current state (e.g., [], [1], [1, 2], etc.).
-            result.append(list(current_subset))
+        # Iterate through every number from 0 to 2^n - 1
+        for i in range(subsets_count):
+            current_subset = []
+            # Check each bit position j
+            for j in range(n):
+                # If the j-th bit of 'i' is set, include nums[j]
+                if (i >> j) & 1:
+                    current_subset.append(nums[j])
+            result.append(current_subset)
 
-            # Explore adding new elements to the current subset.
-            for i in range(start_index, len(nums)):
-                # Include the element nums[i].
-                current_subset.append(nums[i])
-                # Recurse with the next starting index to build upon the new subset.
-                backtrack(i + 1)
-                # Backtrack: remove the element to explore subsets without it.
-                current_subset.pop()
-
-        backtrack(0)
         return result
